@@ -10,7 +10,12 @@ public class ArrayDictionary implements Dictionary {
     @Override
     public boolean isEmpty() {
         // NOT IMPLEMENTED YET
-        return false;
+        for (KVEntry entry: entries) {
+            if (entry.key != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private int hashFunction(String key) {
@@ -46,6 +51,26 @@ public class ArrayDictionary implements Dictionary {
     @Override
     public void remove(String key) {
         // homework
+        int hashedKey = hashFunction(key);
+        if (entries == null) {
+            return;
+        }
+
+        if (hashedKey <= entries.length && entries[hashedKey] != null) {
+            KVEntry temp = entries[hashedKey];
+            if (temp.key.equals(key)) {
+                entries[hashedKey] = temp.next;
+                return;
+            }
+            while (temp.next != null) {
+                if (temp.next.key.equals(key)) {
+                    temp.next = temp.next.next;
+                    return;
+                }
+                temp = temp.next;
+            }
+        }
+
     }
 
     @Override
